@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+    echo "Usage: swrastrun <command>"
+    echo ""
+    echo "Run applications with Mesa swr driver (legacy non-Gallium3D OpenGL software rasterizer)"
+    echo ""
+    echo "Example:"
+    echo "  swrastrun glxgears"
+    echo ""
+    exit 1
+fi
+
+__GLX_VENDOR_LIBRARY_NAME=mesa LIBGL_ALWAYS_SOFTWARE=true MESA_LOADER_DRIVER_OVERRIDE=swr GALLIUM_DRIVER=swr "$@"

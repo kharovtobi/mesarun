@@ -1,0 +1,37 @@
+#!/bin/bash
+
+function help {
+    echo "Usage: llvmpiperun [options] <command>"
+    echo ""
+    echo "Run applications with Mesa llvmpipe driver (OpenGL/Vulkan software rasterizer)"
+    echo ""
+    echo "Options:"
+    echo "opengl, gl    Run software rendering in OpenGL"
+    echo "vulkan, vk    Run software rendering in Vulkan"
+    echo ""
+    echo "Example:"
+    echo "  llvmpiperun opengl glxgears"
+    echo "  llvmpiperun vulkan vkcube"
+    echo ""
+    exit 1
+}
+
+CMD=$1
+
+case $CMD in
+    "opengl"|"gl")
+        if [ $# -lt 2 ]; then
+            help
+        fi
+        __GLX_VENDOR_LIBRARY_NAME=mesa LIBGL_ALWAYS_SOFTWARE=true MESA_LOADER_DRIVER_OVERRIDE=llvmpipe GALLIUM_DRIVER=llvmpipe "${@:2}"
+        ;;
+    "vulkan"|"vk")
+        if [ $# -lt 2 ]; then
+        help
+        fi
+        __GLX_VENDOR_LIBRARY_NAME=mesa LIBGL_ALWAYS_SOFTWARE=true VK_DRIVER_FILES=/usr/share/vulkan/icd.d/lvp_icd.i686.json:/usr/share/vulkan/icd.d/lvp_icd.x86_64.json "${@:2}"
+        ;;
+    *)
+        help
+        ;;
+esac

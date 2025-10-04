@@ -1,0 +1,14 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]; then
+    echo "Usage: softpiperun <command>"
+    echo ""
+    echo "Run applications with Mesa softpipe driver (legacy OpenGL software rasterizer)"
+    echo ""
+    echo "Example:"
+    echo "  softpiperun glxgears"
+    echo ""
+    exit 1
+fi
+
+__GLX_VENDOR_LIBRARY_NAME=mesa LIBGL_ALWAYS_SOFTWARE=true MESA_LOADER_DRIVER_OVERRIDE=softpipe GALLIUM_DRIVER=softpipe "$@"
