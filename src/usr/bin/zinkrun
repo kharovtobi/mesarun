@@ -6,7 +6,7 @@ if [ $# -eq 0 ]; then
     echo "Run applications with Mesa Zink driver (OpenGL over Vulkan)"
     echo ""
     echo "Example:"
-    echo "  zinkrun vkcube"
+    echo "  zinkrun glxgears"
     echo ""
     exit 1
 fi
